@@ -6,11 +6,14 @@
 
 .header{
     background-color: rgb(56, 56, 56);
+    position: relative;
     color: white;
     margin: 0px;
     height: 100px;
     text-align: center;
     display: flex;
+    box-shadow: 0 0px 10px rgba(0 , 0, 0, 0.5);
+    z-index: 1;
 }
 
 .header h1{
