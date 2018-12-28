@@ -5,19 +5,19 @@
 
 
 .header{
-    background-color: rgb(56, 56, 56);
     position: relative;
-    color: white;
     margin: 0px;
-    height: 100px;
     text-align: center;
-    display: flex;
-    box-shadow: 0 0px 10px rgba(0 , 0, 0, 0.5);
-    z-index: 1;
 }
 
 .header h1{
+    position: relative;
+    background-color: rgb(54, 54, 54);
+    height: 100px;
+    color: white;
     margin: auto;
+    box-shadow: 0 0px 10px rgba(0 , 0, 0, 0.5);
+    z-index: 1;
 }
 
 .navbar{
@@ -36,14 +36,12 @@
     text-align: center;
     text-decoration: none;
     padding: 10px;
-    cursor: pointer;
-    user-select: none;
-}
-
-.navbar_element a:visited{
     color: black;
 }
 
+.navbar_element a:visited, .navbar_element a:active{
+    color: black;
+}
 
 
 .navbar_element{
