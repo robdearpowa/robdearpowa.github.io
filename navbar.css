@@ -31,15 +31,17 @@
     text-align: center;
 }
 
-.navbar_element a{
+.navbar_element .element_text{
     display: inline-block;
+    user-select: none;
+    cursor: pointer;
     text-align: center;
     text-decoration: none;
     padding: 10px;
     color: black;
 }
 
-.navbar_element a:visited, .navbar_element a:active{
+.navbar_element .element_text:visited, .navbar_element a:active{
     color: black;
 }
 
@@ -50,4 +52,9 @@
 
 .navbar_element:hover{
     background-color: rgba(0, 0, 0, 0.137);
+}
+
+body[theme="dark"]{
+    background-color: black;
+    color: white;
 }
