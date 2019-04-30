@@ -1,0 +1,28 @@
+.txtDuration{
+    box-sizing: content-box;
+    margin: 5px;
+    padding: 5px;
+}
+
+body{
+    text-align: center;
+}
+
+.button{
+    margin: 5px;
+    background-color: rgb(0, 133, 133);
+    border: 2px solid rgb(0, 133, 133);
+    color: white;
+    padding: 5px;
+    text-decoration: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.button:active, .button:visited{
+    color: white;
+}
+
+.button:hover{
+    background: white;
+    color: rgb(0, 133, 133);
+}
