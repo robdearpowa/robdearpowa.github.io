@@ -42,7 +42,7 @@ function elaborateClick(eventTrigger) {
         content = content.substring(charsCount);
 
         result = result.replace(/"/g, '\\"');
-        result = result.replace(/\n/g, '\\\\n')
+        result = result.replace(/\n/g, '\\n')
 
         txtResult.value += varName + `+="${result}";\n`
     }
