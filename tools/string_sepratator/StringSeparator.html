@@ -35,6 +35,7 @@
 
         .button[copied] {
             background-color: #9be098;
+            border: 1px solid #5cb742;
         }
 
         .textField {
@@ -72,12 +73,12 @@
     Chars count: <br>
     <input type="number" id="txtCharsCount" class="textField" value="1"><br><br>
     String content: <br>
-    <button onclick="dialogEvent(this)" id="btnSave" class="button">Save Setup</button><br>
-    <textarea id="txtContent" wrap="off" rows="20" cols="80" class="textField"></textarea><br>
-    <button id="btnElaborate" onclick="elaborateClick(this)" class="button">Elaborate</button>
-    <button onclick="dialogEvent(this)" id="btnDialogCopy" class="button">Copy</button> <br>
+    <button id="btnSave" class="button">Save Setup</button><br>
+    <textarea id="txtContent" wrap="off" rows="17" cols="80" class="textField"></textarea><br>
+    <button id="btnElaborate" class="button">Elaborate</button>
+    <button id="btnDialogCopy" class="button">Copy</button> <br>
 
-    <textarea id="txtResult" wrap="off" rows="20" cols="80" class="textField"></textarea>
+    <textarea id="txtResult" wrap="off" rows="17" cols="80" class="textField"></textarea>
 
     <script>
         !function (root, factory) { "object" == typeof exports && "object" == typeof module ? module.exports = factory() : "function" == typeof define && define.amd ? define([], factory) : "object" == typeof exports ? exports.clipboard = factory() : root.clipboard = factory() }("undefined" != typeof self ? self : this, function () {
@@ -96,74 +97,7 @@
         });
 //# sourceMappingURL=clipboard-polyfill.promise.js.map
     </script>
-    <script>
-        let txtVarName = document.querySelector("#txtVarName");
-        let txtCharsCount = document.querySelector("#txtCharsCount");
-        let txtContent = document.querySelector("#txtContent");
-        let btnElaborate = document.querySelector("#btnElaborate");
-        let txtResult = document.querySelector("#txtResult");
-
-        getCookie();
-
-        function elaborateClick(eventTrigger) {
-            console.log(eventTrigger);
-
-            let varName = txtVarName.value;
-            let charsCount = eval(txtCharsCount.value);
-            let content = txtContent.value;
-
-
-
-            let result = "";
-            txtResult.value = "";
-
-            txtResult.value += varName + '="' + result + '";\n'
-
-            while (content.length > 0 && charsCount > 0) {
-                result = content.substring(0, charsCount);
-                content = content.substring(charsCount);
-
-                result = result.replace(/"/g, '\\"');
-                result = result.replace(/\n/g, '\\n')
-
-                txtResult.value += varName + '+="' + result + '";\n'
-            }
-        }
-
-        function dialogEvent(eventTrigger) {
-            console.log(eventTrigger);
-
-            if (eventTrigger.id === "btnDialogCopy") {
-                clipboard.writeText(txtResult.value);
-                eventTrigger.setAttribute("copied", "");
-            }
-
-            if (eventTrigger.id === "btnSave") {
-                let settings = { varName: "", charsCount: "" };
-                settings.varName = txtVarName.value;
-                settings.charsCount = eval(txtCharsCount.value);
-
-                let json = JSON.stringify(settings);
-                document.cookie = json;
-            }
-
-        }
-
-        function getCookie() {
-            if (document.cookie != null && document.cookie != "") {
-                try {
-                    let json = document.cookie;
-                    let settings = JSON.parse(json);
-
-                    txtVarName.value = settings.varName;
-                    txtCharsCount.value = settings.charsCount;
-                } catch (e) {
-
-                }
-            }
-        }
-
-    </script>
+    <script type="module" src="app.js"></script>
 </body>
 
 </html>

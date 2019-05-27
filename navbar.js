@@ -1,6 +1,8 @@
+import { CookieHandler } from "./utils/CookieHandler.js"
+
 var themeButton = document.querySelector(".theme");
 var body = document.querySelector("body");
-var theme = document.cookie;
+var theme = CookieHandler.loadCookie("theme");
 
 updateTheme();
 
@@ -16,11 +18,10 @@ themeButton.addEventListener("click", (e) => {
 
 
 function updateTheme() {
-    if (theme == "") {
-        document.cookie = "white"
-        theme = document.cookie;
+    if (theme == null) {
+        theme = "white"
     }
 
     body.setAttribute("theme", theme);
-    document.cookie = theme;
+    CookieHandler.saveCookie("theme", theme);
 }
