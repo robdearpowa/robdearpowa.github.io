@@ -7,7 +7,9 @@ let btnElaborate = document.querySelector("#btnElaborate");
 let btnSave = document.querySelector("#btnSave");
 let btnCopy = document.querySelector("#btnDialogCopy");
 let txtResult = document.querySelector("#txtResult");
+let comboKeepEscape = document.querySelector("#comboKeepEscape")
 
+comboKeepEscape.selectedIndex = 1
 
 btnElaborate.addEventListener("click", (e) => {
     elaborateClick(e.target);
@@ -41,8 +43,11 @@ function elaborateClick(eventTrigger) {
         result = content.substring(0, charsCount);
         content = content.substring(charsCount);
 
+        if (comboKeepEscape.value == 1) {
+            result = result.replace(/\\/g, '\\\\')
+        }
+
         result = result.replace(/"/g, '\\"');
-        result = result.replace(/\n/g, '\\n')
 
         txtResult.value += varName + `+="${result}";\n`
     }
