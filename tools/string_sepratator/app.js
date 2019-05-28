@@ -9,6 +9,21 @@ let btnCopy = document.querySelector("#btnDialogCopy");
 let txtResult = document.querySelector("#txtResult");
 let comboKeepEscape = document.querySelector("#comboKeepEscape")
 
+
+
+document.addEventListener("DOMContentLoaded", (e) => {
+    let btns = document.querySelectorAll('.mdc-button')
+    let textInputs = document.querySelectorAll('.mdc-text-field')
+
+    for (let i = 0; i < btns.length; i++) {
+        mdc.ripple.MDCRipple.attachTo(btns[i])
+    }
+
+    for (let i = 0; i < textInputs.length; i++) {
+        mdc.textField.MDCTextField.attachTo(textInputs[i])
+    }
+})
+
 comboKeepEscape.selectedIndex = 1
 
 btnElaborate.addEventListener("click", (e) => {
@@ -55,7 +70,7 @@ function elaborateClick(eventTrigger) {
 
         result = result.replace(/"/g, '\\"');
 
-        txtResult.value += varName + `+="${result}";\n`
+        txtResult.value += `${varName}+="${result}";\n`
     }
 }
 

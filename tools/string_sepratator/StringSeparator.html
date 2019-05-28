@@ -7,50 +7,37 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>String Separator</title>
 
+
+
+    <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
     <style>
         body {
+            padding: 20px;
             text-align: center;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --mdc-theme-primary: #0067ce;
+            --mdc-theme-on-primary: #ffffff;
+            --mdc-theme-on-surface: #133c79;
+            --mdc-theme-background: #c0c0c0;
         }
 
         .button {
             margin: 5px;
-            min-width: 100px;
-            min-height: 30px;
-            padding: 5px;
-            border: 0px solid rgb(104, 162, 255);
-            border-radius: 3px;
-            box-shadow: 0px 3px 5px rgb(0, 0, 0, 0.5);
             transition: all 100ms ease-in-out;
         }
 
-        .button:hover {
-            background-color: #cce6ff
-        }
-
-        .button:active {
-            box-shadow: 0px 0px 0px transparent;
-            transform: translateY(5px);
-        }
-
         .button[copied] {
-            background-color: #9be098;
-            border: 1px solid #5cb742;
+            background-color: #06af00;
         }
 
         .textField {
-            font-family: monospace;
-            padding: 10px;
-            border: 1px solid gray;
-            border-radius: 5px;
             resize: vertical;
-            font-family: monospace;
             transition: all 300ms ease-in-out;
         }
 
-        .textField:focus {
-            box-shadow: 0px 3px 10px rgb(0, 0, 0, 0.5);
-
+        .mdc-floating-label--float-above {
+            color: #133c79;
         }
 
         dialog {
@@ -68,22 +55,57 @@
 </head>
 
 <body>
-    String Name: <br>
-    <input type="text" id="txtVarName" class="textField"> <br><br>
-    Chars count: <br>
-    <input type="number" id="txtCharsCount" class="textField" value="1"><br>
-    <button id="btnSave" class="button">Save Setup</button><br><br>
-    String content: <br>
-    <textarea id="txtContent" wrap="off" rows="17" cols="80" class="textField"></textarea><br>
+    <div class="mdc-text-field mdc-text-field--outlined">
+        <input id="txtVarName" class="mdc-text-field__input">
+        <div class="mdc-notched-outline">
+            <div class="mdc-notched-outline__leading"></div>
+            <div class="mdc-notched-outline__notch">
+                <label class="mdc-floating-label">Variable Name</label>
+            </div>
+            <div class="mdc-notched-outline__trailing"></div>
+        </div>
+    </div>
+    <div class="mdc-text-field mdc-text-field--outlined">
+        <input type="number" id="txtCharsCount" class="mdc-text-field__input">
+        <div class="mdc-notched-outline">
+            <div class="mdc-notched-outline__leading"></div>
+            <div class="mdc-notched-outline__notch">
+                <label class="mdc-floating-label">Chars Count</label>
+            </div>
+            <div class="mdc-notched-outline__trailing"></div>
+        </div>
+    </div><br>
+    <button id="btnSave" class="button mdc-button mdc-button--raised">Save Setup</button><br>
+    <div class="mdc-text-field mdc-text-field--textarea">
+        <textarea class="textField mdc-text-field__input" id="txtContent" rows="10" cols="80"></textarea>
+        <div class="mdc-notched-outline">
+            <div class="mdc-notched-outline__leading"></div>
+            <div class="mdc-notched-outline__notch">
+                <label class="mdc-floating-label">String Content</label>
+            </div>
+            <div class="mdc-notched-outline__trailing"></div>
+        </div>
+    </div> <br>
+
     Keep Escapes:
     <select id="comboKeepEscape">
         <option value="0">Yes</option>
         <option value="1">No</option>
     </select>
-    <button id="btnElaborate" class="button">Elaborate</button>
-    <button id="btnDialogCopy" class="button">Copy</button> <br>
+    <button id="btnElaborate" class="button mdc-button mdc-button--raised">Elaborate</button>
+    <button id="btnDialogCopy" class="button mdc-button mdc-button--raised">Copy</button> <br>
 
-    <textarea id="txtResult" wrap="off" rows="17" cols="80" class="textField"></textarea>
+
+    <div class="mdc-text-field mdc-text-field--textarea">
+        <textarea class="textField mdc-text-field__input" id="txtResult" rows="10" cols="80"></textarea>
+        <div class="mdc-notched-outline">
+            <div class="mdc-notched-outline__leading"></div>
+            <div class="mdc-notched-outline__notch">
+                <label class="mdc-floating-label">Result</label>
+            </div>
+            <div class="mdc-notched-outline__trailing"></div>
+        </div>
+    </div>
 
     <script>
         !function (root, factory) { "object" == typeof exports && "object" == typeof module ? module.exports = factory() : "function" == typeof define && define.amd ? define([], factory) : "object" == typeof exports ? exports.clipboard = factory() : root.clipboard = factory() }("undefined" != typeof self ? self : this, function () {
