@@ -32,7 +32,12 @@ function elaborateClick(eventTrigger) {
     let charsCount = eval(txtCharsCount.value);
     let content = txtContent.value;
 
+    try {
+        let obj = JSON.parse(content)
+        content = JSON.stringify(obj)
+    } catch (e) {
 
+    }
 
     let result = "";
     txtResult.value = "";
@@ -45,6 +50,7 @@ function elaborateClick(eventTrigger) {
 
         if (comboKeepEscape.value == 1) {
             result = result.replace(/\\/g, '\\\\')
+            result = result.replace(/\n/g, '\\\\n')
         }
 
         result = result.replace(/"/g, '\\"');
