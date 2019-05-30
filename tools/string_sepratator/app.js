@@ -1,104 +1,83 @@
-import { CookieHandler } from '../../utils/CookieHandler.js'
-
-let txtVarName = document.querySelector("#txtVarName");
-let txtCharsCount = document.querySelector("#txtCharsCount");
-let txtContent = document.querySelector("#txtContent");
-let btnElaborate = document.querySelector("#btnElaborate");
-let btnSave = document.querySelector("#btnSave");
-let btnCopy = document.querySelector("#btnDialogCopy");
-let txtResult = document.querySelector("#txtResult");
-let comboKeepEscape = document.querySelector("#comboKeepEscape")
-
-
-
-document.addEventListener("DOMContentLoaded", (e) => {
-    let btns = document.querySelectorAll('.mdc-button')
-    let textInputs = document.querySelectorAll('.mdc-text-field')
-
-    for (let i = 0; i < btns.length; i++) {
-        mdc.ripple.MDCRipple.attachTo(btns[i])
+import CookieManager from '../../utils/CookieManager.js';
+var txtVarName = document.querySelector("#txtVarName");
+var txtCharsCount = document.querySelector("#txtCharsCount");
+var txtContent = document.querySelector("#txtContent");
+var btnElaborate = document.querySelector("#btnElaborate");
+var btnSave = document.querySelector("#btnSave");
+var btnCopy = document.querySelector("#btnDialogCopy");
+var txtResult = document.querySelector("#txtResult");
+var comboKeepEscape = document.querySelector("#comboKeepEscape");
+document.addEventListener("DOMContentLoaded", function (e) {
+    var btns = document.querySelectorAll('.mdc-button');
+    var textInputs = document.querySelectorAll('.mdc-text-field');
+    for (var i = 0; i < btns.length; i++) {
+        //@ts-ignore
+        mdc.ripple.MDCRipple.attachTo(btns[i]);
     }
-
-    for (let i = 0; i < textInputs.length; i++) {
-        mdc.textField.MDCTextField.attachTo(textInputs[i])
+    for (var i = 0; i < textInputs.length; i++) {
+        //@ts-ignore
+        mdc.textField.MDCTextField.attachTo(textInputs[i]);
     }
-})
-
-comboKeepEscape.selectedIndex = 1
-
-btnElaborate.addEventListener("click", (e) => {
+});
+comboKeepEscape.selectedIndex = 1;
+btnElaborate.addEventListener("click", function (e) {
     elaborateClick(e.target);
-})
-
-btnSave.addEventListener("click", (e) => {
-    dialogEvent(e.target)
-})
-
-btnCopy.addEventListener("click", (e) => {
-    dialogEvent(e.target)
-})
-
-loadSetup()
-
+});
+btnSave.addEventListener("click", function (e) {
+    dialogEvent(e.target);
+});
+btnCopy.addEventListener("click", function (e) {
+    dialogEvent(e.target);
+});
+loadSetup();
 function elaborateClick(eventTrigger) {
     console.log(eventTrigger);
-
-    let varName = txtVarName.value;
-    let charsCount = eval(txtCharsCount.value);
-    let content = txtContent.value;
-
+    var varName = txtVarName.value;
+    var charsCount = eval(txtCharsCount.value);
+    var content = txtContent.value;
     try {
-        let obj = JSON.parse(content)
-        content = JSON.stringify(obj)
-    } catch (e) {
-
+        var obj = JSON.parse(content);
+        content = JSON.stringify(obj);
     }
-
-    let result = "";
+    catch (e) {
+    }
+    var result = "";
     txtResult.value = "";
-
-    txtResult.value += varName + '="' + result + '";\n'
-
+    txtResult.value += varName + '="' + result + '";\n';
+    txtResult.focus();
     while (content.length > 0 && charsCount > 0) {
         result = content.substring(0, charsCount);
         content = content.substring(charsCount);
-
-        if (comboKeepEscape.value == 1) {
-            result = result.replace(/\\/g, '\\\\')
-            result = result.replace(/\n/g, '\\\\n')
+        if (comboKeepEscape.value == "1") {
+            result = result.replace(/\\/g, '\\\\');
+            result = result.replace(/\n/g, '\\\\n');
         }
-
         result = result.replace(/"/g, '\\"');
-
-        txtResult.value += `${varName}+="${result}";\n`
+        txtResult.value += varName + "+=\"" + result + "\";\n";
     }
 }
-
 function dialogEvent(eventTrigger) {
     console.log(eventTrigger);
-
     if (eventTrigger.id === "btnDialogCopy") {
+        //@ts-ignore
         clipboard.writeText(txtResult.value);
         eventTrigger.setAttribute("copied", "");
-        setTimeout(() => {
-            eventTrigger.removeAttribute("copied")
-        }, 1500)
+        setTimeout(function () {
+            eventTrigger.removeAttribute("copied");
+        }, 1500);
     }
-
     if (eventTrigger.id === "btnSave") {
-        let settings = { varName: "", charsCount: "" };
+        var settings = { varName: "", charsCount: "" };
         settings.varName = txtVarName.value;
         settings.charsCount = eval(txtCharsCount.value);
-
-        CookieHandler.saveCookieAsObject('string_separator_settings', settings);
+        CookieManager.saveCookieAsObject('string_separator_settings', settings);
     }
 }
-
 function loadSetup() {
-    let settings = CookieHandler.loadCookieAsObject('string_separator_settings');
-
+    var settings = CookieManager.loadCookieAsObject('string_separator_settings');
     if (settings != null) {
         txtVarName.value = settings.varName;
         txtCharsCount.value = settings.charsCount;
     }
 }
+//# sourceMappingURL=app.js.map
