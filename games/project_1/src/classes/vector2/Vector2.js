@@ -5,12 +5,19 @@ var Vector2 = /** @class */ (function () {
         this.x = x;
         this.y = y;
     }
+    Vector2.prototype.clamp = function (min, max) {
+        this.x = this.x < min ? min : this.x > max ? max : this.x;
+        this.y = this.y < min ? min : this.y > max ? max : this.y;
+    };
     //Return an array of the vector
     Vector2.prototype.toArray = function () {
         var result = new Array();
         result[0] = this.x;
         result[1] = this.y;
         return result;
+    };
+    Vector2.zero = function () {
+        return new Vector2(0, 0);
     };
     return Vector2;
 }());

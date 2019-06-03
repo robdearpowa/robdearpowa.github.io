@@ -13,20 +13,40 @@ var __extends = (this && this.__extends) || (function () {
 })();
 import GameObject from "../gameobject/GameObject.js";
 import Vector2 from "../vector2/Vector2.js";
+import InputManager from "../inputmanager/InputManager.js";
 var Player = /** @class */ (function (_super) {
     __extends(Player, _super);
     function Player() {
-        return _super !== null && _super.apply(this, arguments) || this;
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.speed = 5;
+        return _this;
     }
     Player.prototype.start = function (ctx) {
-        this.postion = new Vector2(500, 500);
+        this.postion = Vector2.zero();
+        this.inputManager = new InputManager();
     };
     Player.prototype.update = function (ctx) {
-        this.postion.x++;
-        this.postion.y++;
+        //console.log(this.postion)
+        if (this.inputManager.isKeyPressed(37) || this.inputManager.isKeyPressed(65)) {
+            this.postion.x -= this.speed;
+        }
+        if (this.inputManager.isKeyPressed(38) || this.inputManager.isKeyPressed(87)) {
+            this.postion.y -= this.speed;
+        }
+        if (this.inputManager.isKeyPressed(39) || this.inputManager.isKeyPressed(68)) {
+            this.postion.x += this.speed;
+        }
+        if (this.inputManager.isKeyPressed(40) || this.inputManager.isKeyPressed(83)) {
+            this.postion.y += this.speed;
+        }
     };
     Player.prototype.draw = function (ctx) {
-        ctx.fillRect(this.postion.x, this.postion.y, 100, 50);
+        var _this = this;
+        this.spirte = new Image();
+        this.spirte.src = "./src/classes/player/spcm.png";
+        this.spirte.onload = function (e) {
+            ctx.drawImage(_this.spirte, _this.postion.x, _this.postion.y);
+        };
     };
     return Player;
 }(GameObject));
