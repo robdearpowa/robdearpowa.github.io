@@ -1,5 +1,7 @@
 import GameObject from "./classes/gameobject/GameObject.js";
 import Player from "./classes/player/Player.js";
+import Tree from "./classes/tree/Tree.js";
+import CollisionMask from "./classes/collision_mask/CollisionMask.js";
 
 let canvas: HTMLCanvasElement
 let context: CanvasRenderingContext2D
@@ -22,6 +24,7 @@ window.addEventListener("load", (e) => {
 function gameLoop() {
     requestAnimationFrame(gameLoop)
     update()
+    lateUpdate()
     draw()
 }
 
@@ -33,6 +36,7 @@ function start() {
     })
 
     gameObjectList.push(new Player())
+    gameObjectList.push(new Tree())
 
     for (let i in gameObjectList) {
         gameObjectList[i].start(context)
@@ -43,19 +47,24 @@ function update() {
     for (let i in gameObjectList) {
         gameObjectList[i].update(context)
     }
+    updateGlobalCollisionMask()
+}
+
+function lateUpdate() {
+    for (let i in gameObjectList) {
+        gameObjectList[i].lateUpdate()
+    }
 }
 
 function draw() {
     clearScreen()
-    if (showFps) executeFps()
-
-    for (let i in gameObjectList) {
-        gameObjectList[i].draw(context)
-    }
+    drawBackground()
+    drawMiddleground()
+    drawForground()
 }
 
 function clearScreen() {
-    context.fillStyle = "black"
+    context.fillStyle = "#bbbbbb"
     context.fillRect(0, 0, canvas.width, canvas.height)
 }
 
@@ -79,4 +88,31 @@ function executeFps() {
     context.font = "normal 16pt Arial";
 
     context.fillText(lastFps.toFixed() + " fps", 10, 26);
+}
+
+function drawForground() {
+    if (showFps) executeFps()
+}
+
+function drawMiddleground() {
+    gameObjectList.sort((a, b): number => {
+        return a.transform.layer > b.transform.layer ? 1 : a.transform.layer < b.transform.layer ? -1 : 0
+    })
+
+    for (let i in gameObjectList) {
+        gameObjectList[i].draw(context)
+    }
+}
+
+function drawBackground() {
+
+}
+
+function updateGlobalCollisionMask() {
+    let collisionMasksList: Array<CollisionMask> = new Array()
+
+    for (let i in gameObjectList) {
+        collisionMasksList.push(gameObjectList[i].collisionMask)
+    }
+    CollisionMask.globalCollisionMasksList = collisionMasksList
 }

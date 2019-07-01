@@ -1,10 +1,26 @@
 export default class Vector2 {
-    public x: number = 0;
-    public y: number = 0;
+    private _x: number = 0;
+    private _y: number = 0;
 
     public constructor(x: number, y: number) {
-        this.x = x;
-        this.y = y;
+        this._x = x;
+        this._y = y;
+    }
+
+    public set x(value: number) {
+        this._x = value
+    }
+
+    public set y(value: number) {
+        this._y = value
+    }
+
+    public get x(): number {
+        return this._x
+    }
+
+    public get y(): number {
+        return this._y
     }
 
     public clamp(min: number, max: number) {
@@ -21,7 +37,35 @@ export default class Vector2 {
         return result;
     }
 
+    public toNegative(): Vector2 {
+        return new Vector2(-this.x, -this.y)
+    }
+
+    public copy(): Vector2 {
+        return new Vector2(this.x, this.y)
+    }
+
+    public static sum(vctr1: Vector2, vctr2: Vector2): Vector2 {
+        let vctrFinal = vctr1.copy()
+        vctrFinal.x += vctr2.x
+        vctrFinal.y += vctr2.y
+
+        return vctrFinal
+    }
+
+    public static mult(vctr1: Vector2, vctr2: Vector2) {
+        let vctrFinal = vctr1.copy()
+        vctrFinal.x *= vctr2.x
+        vctrFinal.y *= vctr2.y
+
+        return vctrFinal
+    }
+
     public static zero(): Vector2 {
         return new Vector2(0, 0)
+    }
+
+    public static one(): Vector2 {
+        return new Vector2(1, 1)
     }
 }

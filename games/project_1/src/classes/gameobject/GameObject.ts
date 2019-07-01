@@ -1,9 +1,24 @@
 import Vector2 from "../vector2/Vector2.js"
+import CollisionMask from "../collision_mask/CollisionMask.js";
+import Transform from "../transform/Transform.js";
+import Utils from "../utils/Utils.js";
 
 export default abstract class GameObject {
-    public postion: Vector2 = new Vector2(0, 0);
 
-    public abstract start(ctx: CanvasRenderingContext2D);
-    public abstract update(ctx: CanvasRenderingContext2D);
-    public abstract draw(ctx: CanvasRenderingContext2D);
+    public id: string
+    public transform: Transform = new Transform()
+    public collisionMask: CollisionMask = new CollisionMask()
+    public sprite: HTMLImageElement
+
+    constructor() {
+        this.id = Utils.makeid(10)
+    }
+
+    public abstract start(ctx: CanvasRenderingContext2D)
+    public abstract update(ctx: CanvasRenderingContext2D)
+    public lateUpdate() {
+        this.transform.updatePivot()
+        this.collisionMask.scale = this.transform.scale.copy()
+    }
+    public abstract draw(ctx: CanvasRenderingContext2D)
 }
