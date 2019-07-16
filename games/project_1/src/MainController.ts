@@ -47,7 +47,7 @@ function update() {
     for (let i in gameObjectList) {
         gameObjectList[i].update(context)
     }
-    updateGlobalCollisionMask()
+    //updateGlobalCollisionMask()
 }
 
 function lateUpdate() {
@@ -60,7 +60,7 @@ function draw() {
     clearScreen()
     drawBackground()
     drawMiddleground()
-    drawForground()
+    drawForeground()
 }
 
 function clearScreen() {
@@ -90,7 +90,7 @@ function executeFps() {
     context.fillText(lastFps.toFixed() + " fps", 10, 26);
 }
 
-function drawForground() {
+function drawForeground() {
     if (showFps) executeFps()
 }
 

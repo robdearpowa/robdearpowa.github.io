@@ -10,6 +10,8 @@ var GameObject = /** @class */ (function () {
     GameObject.prototype.lateUpdate = function () {
         this.transform.updatePivot();
         this.collisionMask.scale = this.transform.scale.copy();
+        this.collisionMask.position = this.transform.position.copy();
+        this.collisionMask.size = this.transform.size.copy();
     };
     return GameObject;
 }());

@@ -36,7 +36,7 @@ function update() {
     for (var i in gameObjectList) {
         gameObjectList[i].update(context);
     }
-    updateGlobalCollisionMask();
+    //updateGlobalCollisionMask()
 }
 function lateUpdate() {
     for (var i in gameObjectList) {
@@ -47,7 +47,7 @@ function draw() {
     clearScreen();
     drawBackground();
     drawMiddleground();
-    drawForground();
+    drawForeground();
 }
 function clearScreen() {
     context.fillStyle = "#bbbbbb";
@@ -67,7 +67,7 @@ function executeFps() {
     context.font = "normal 16pt Arial";
     context.fillText(lastFps.toFixed() + " fps", 10, 26);
 }
-function drawForground() {
+function drawForeground() {
     if (showFps)
         executeFps();
 }

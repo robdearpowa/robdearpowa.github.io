@@ -21,25 +21,22 @@ export default class Player extends GameObject {
         this.transform.position = Vector2.zero()
         this.inputManager = new InputManager()
 
+        this.transform.pivotOffset = new Vector2(this.transform.size.x / 2, this.transform.size.y)
     }
 
     public update(ctx: CanvasRenderingContext2D) {
         //console.log(this.postion)
         if (this.inputManager.isKeyPressed(37) || this.inputManager.isKeyPressed(65)) {
-            if (!this.collisionCheck(-this.speed, 0))
-                this.transform.position.x -= this.speed
+            this.transform.position.x -= this.speed
         }
         if (this.inputManager.isKeyPressed(38) || this.inputManager.isKeyPressed(87)) {
-            if (!this.collisionCheck(0, -this.speed))
-                this.transform.position.y -= this.speed
+            this.transform.position.y -= this.speed
         }
         if (this.inputManager.isKeyPressed(39) || this.inputManager.isKeyPressed(68)) {
-            if (!this.collisionCheck(this.speed, 0))
-                this.transform.position.x += this.speed
+            this.transform.position.x += this.speed
         }
         if (this.inputManager.isKeyPressed(40) || this.inputManager.isKeyPressed(83)) {
-            if (!this.collisionCheck(0, this.speed))
-                this.transform.position.y += this.speed
+            this.transform.position.y += this.speed
         }
 
         if (this.inputManager.isKeyPressed(90)) {
@@ -54,8 +51,6 @@ export default class Player extends GameObject {
     public lateUpdate(): void {
         super.lateUpdate()
         this.transform.layer = this.transform.pivot.y
-        this.collisionMask.position = new Vector2(this.transform.position.x, this.transform.position.y + this.transform.size.y * 2 / 3)
-        this.collisionMask.size = new Vector2(this.transform.size.x, this.transform.size.y / 3)
     }
 
     public draw(ctx: CanvasRenderingContext2D) {
@@ -77,26 +72,6 @@ export default class Player extends GameObject {
     private drawHitbox(ctx: CanvasRenderingContext2D) {
         ctx.fillStyle = "#c4ffda"
         ctx.fillRect(this.collisionMask.position.x, this.collisionMask.position.y, this.collisionMask.size.x, this.collisionMask.size.y)
-    }
-
-    private collisionCheck(x: number, y: number): boolean {
-        let shadowCollision: CollisionMask = new CollisionMask()
-        shadowCollision.position = this.collisionMask.position.copy()
-        shadowCollision.scale = this.collisionMask.scale.copy()
-        shadowCollision.size = this.collisionMask.getRealSize()
-
-        shadowCollision.position.x += x
-        shadowCollision.position.y += y
-
-        shadowCollision.updateGameObject(this)
-
-        let collisionMasksList: Array<CollisionMask> = CollisionMask.globalCollisionMasksList;
-
-        for (let i in collisionMasksList) {
-            if (CollisionMask.isColliding(shadowCollision, collisionMasksList[i])) {
-                return true
-            }
-        }
     }
 
 }

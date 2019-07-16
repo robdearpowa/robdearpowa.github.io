@@ -14,7 +14,6 @@ var __extends = (this && this.__extends) || (function () {
 import GameObject from "../gameobject/GameObject.js";
 import Vector2 from "../vector2/Vector2.js";
 import InputManager from "../inputmanager/InputManager.js";
-import CollisionMask from "../collision_mask/CollisionMask.js";
 var Player = /** @class */ (function (_super) {
     __extends(Player, _super);
     function Player() {
@@ -35,24 +34,21 @@ var Player = /** @class */ (function (_super) {
         };
         this.transform.position = Vector2.zero();
         this.inputManager = new InputManager();
+        this.transform.pivotOffset = new Vector2(this.transform.size.x / 2, this.transform.size.y);
     };
     Player.prototype.update = function (ctx) {
         //console.log(this.postion)
         if (this.inputManager.isKeyPressed(37) || this.inputManager.isKeyPressed(65)) {
-            if (!this.collisionCheck(-this.speed, 0))
-                this.transform.position.x -= this.speed;
+            this.transform.position.x -= this.speed;
         }
         if (this.inputManager.isKeyPressed(38) || this.inputManager.isKeyPressed(87)) {
-            if (!this.collisionCheck(0, -this.speed))
-                this.transform.position.y -= this.speed;
+            this.transform.position.y -= this.speed;
         }
         if (this.inputManager.isKeyPressed(39) || this.inputManager.isKeyPressed(68)) {
-            if (!this.collisionCheck(this.speed, 0))
-                this.transform.position.x += this.speed;
+            this.transform.position.x += this.speed;
         }
         if (this.inputManager.isKeyPressed(40) || this.inputManager.isKeyPressed(83)) {
-            if (!this.collisionCheck(0, this.speed))
-                this.transform.position.y += this.speed;
+            this.transform.position.y += this.speed;
         }
         if (this.inputManager.isKeyPressed(90)) {
             this.transform.scale = Vector2.sum(this.transform.scale, new Vector2(-0.1, 0));
@@ -65,8 +61,6 @@ var Player = /** @class */ (function (_super) {
     Player.prototype.lateUpdate = function () {
         _super.prototype.lateUpdate.call(this);
         this.transform.layer = this.transform.pivot.y;
-        this.collisionMask.position = new Vector2(this.transform.position.x, this.transform.position.y + this.transform.size.y * 2 / 3);
-        this.collisionMask.size = new Vector2(this.transform.size.x, this.transform.size.y / 3);
     };
     Player.prototype.draw = function (ctx) {
         if (this.isSpriteReady && false) {
@@ -86,21 +80,6 @@ var Player = /** @class */ (function (_super) {
     Player.prototype.drawHitbox = function (ctx) {
         ctx.fillStyle = "#c4ffda";
         ctx.fillRect(this.collisionMask.position.x, this.collisionMask.position.y, this.collisionMask.size.x, this.collisionMask.size.y);
-    };
-    Player.prototype.collisionCheck = function (x, y) {
-        var shadowCollision = new CollisionMask();
-        shadowCollision.position = this.collisionMask.position.copy();
-        shadowCollision.scale = this.collisionMask.scale.copy();
-        shadowCollision.size = this.collisionMask.getRealSize();
-        shadowCollision.position.x += x;
-        shadowCollision.position.y += y;
-        shadowCollision.updateGameObject(this);
-        var collisionMasksList = CollisionMask.globalCollisionMasksList;
-        for (var i in collisionMasksList) {
-            if (CollisionMask.isColliding(shadowCollision, collisionMasksList[i])) {
-                return true;
-            }
-        }
     };
     return Player;
 }(GameObject));

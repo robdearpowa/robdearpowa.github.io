@@ -19,6 +19,8 @@ export default abstract class GameObject {
     public lateUpdate() {
         this.transform.updatePivot()
         this.collisionMask.scale = this.transform.scale.copy()
+        this.collisionMask.position = this.transform.position.copy()
+        this.collisionMask.size = this.transform.size.copy();
     }
     public abstract draw(ctx: CanvasRenderingContext2D)
 }
