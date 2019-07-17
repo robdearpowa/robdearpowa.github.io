@@ -73,6 +73,7 @@ function dialogEvent(eventTrigger) {
         settings.varName = txtVarName.value;
         settings.charsCount = eval(txtCharsCount.value);
         CookieManager.saveCookieAsObject('string_separator_settings', settings);
+        executeNotification("Setup Saved!", "Setup saved successfully!");
     }
 }
 function loadSetup() {

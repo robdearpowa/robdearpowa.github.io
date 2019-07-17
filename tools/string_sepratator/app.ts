@@ -96,6 +96,7 @@ function dialogEvent(eventTrigger) {
         settings.charsCount = eval(txtCharsCount.value);
 
         CookieManager.saveCookieAsObject('string_separator_settings', settings);
+        executeNotification("Setup Saved!", "Setup saved successfully!")
     }
 }
 
