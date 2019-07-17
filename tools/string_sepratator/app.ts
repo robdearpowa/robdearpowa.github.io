@@ -7,7 +7,7 @@ let btnElaborate: HTMLButtonElement = document.querySelector("#btnElaborate");
 let btnSave: HTMLButtonElement = document.querySelector("#btnSave");
 let btnCopy: HTMLButtonElement = document.querySelector("#btnDialogCopy");
 let txtResult: HTMLTextAreaElement = document.querySelector("#txtResult");
-let comboKeepEscape: HTMLSelectElement = document.querySelector("#comboKeepEscape")
+let checkKeepEscape: HTMLInputElement = document.querySelector("#checkKeepEscape")
 
 checkNotificationAccess();
 
@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
     }
 })
 
-comboKeepEscape.selectedIndex = 1
+checkKeepEscape.checked = true;
 
 btnElaborate.addEventListener("click", (e) => {
     elaborateClick(e.target);
@@ -66,7 +66,7 @@ function elaborateClick(eventTrigger) {
         result = content.substring(0, charsCount);
         content = content.substring(charsCount);
 
-        if (comboKeepEscape.value == "1") {
+        if (checkKeepEscape.checked) {
             result = result.replace(/\\/g, '\\\\')
             result = result.replace(/\n/g, '\\\\n')
         }

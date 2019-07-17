@@ -6,7 +6,7 @@ var btnElaborate = document.querySelector("#btnElaborate");
 var btnSave = document.querySelector("#btnSave");
 var btnCopy = document.querySelector("#btnDialogCopy");
 var txtResult = document.querySelector("#txtResult");
-var comboKeepEscape = document.querySelector("#comboKeepEscape");
+var checkKeepEscape = document.querySelector("#checkKeepEscape");
 checkNotificationAccess();
 document.addEventListener("DOMContentLoaded", function (e) {
     var btns = document.querySelectorAll('.mdc-button');
@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
         mdc.textField.MDCTextField.attachTo(textInputs[i]);
     }
 });
-comboKeepEscape.selectedIndex = 1;
+checkKeepEscape.checked = true;
 btnElaborate.addEventListener("click", function (e) {
     elaborateClick(e.target);
 });
@@ -49,7 +49,7 @@ function elaborateClick(eventTrigger) {
     while (content.length > 0 && charsCount > 0) {
         result = content.substring(0, charsCount);
         content = content.substring(charsCount);
-        if (comboKeepEscape.value == "1") {
+        if (checkKeepEscape.checked) {
             result = result.replace(/\\/g, '\\\\');
             result = result.replace(/\n/g, '\\\\n');
         }
