@@ -7,6 +7,7 @@ var btnSave = document.querySelector("#btnSave");
 var btnCopy = document.querySelector("#btnDialogCopy");
 var txtResult = document.querySelector("#txtResult");
 var comboKeepEscape = document.querySelector("#comboKeepEscape");
+checkNotificationAccess();
 document.addEventListener("DOMContentLoaded", function (e) {
     var btns = document.querySelectorAll('.mdc-button');
     var textInputs = document.querySelectorAll('.mdc-text-field');
@@ -65,6 +66,7 @@ function dialogEvent(eventTrigger) {
         setTimeout(function () {
             eventTrigger.removeAttribute("copied");
         }, 1500);
+        executeNotification("Copied!", "Text Successfully copied!");
     }
     if (eventTrigger.id === "btnSave") {
         var settings = { varName: "", charsCount: "" };
@@ -78,6 +80,31 @@ function loadSetup() {
     if (settings != null) {
         txtVarName.value = settings.varName;
         txtCharsCount.value = settings.charsCount;
+    }
+}
+function checkNotificationAccess() {
+    if ("Notification" in window) {
+        if (Notification.permission === "granted") {
+            return true;
+        }
+        else {
+            Notification.requestPermission();
+        }
+    }
+    return false;
+}
+function executeNotification(title, body) {
+    if (checkNotificationAccess()) {
+        var options = {
+            body: body
+        };
+        var notification = new Notification(title, options);
+        notification.addEventListener("click", function () {
+            console.log("notification clicked");
+        });
+    }
+    else {
+        alert(body);
     }
 }
 //# sourceMappingURL=app.js.map

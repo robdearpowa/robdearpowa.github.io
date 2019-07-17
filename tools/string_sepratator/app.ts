@@ -9,7 +9,7 @@ let btnCopy: HTMLButtonElement = document.querySelector("#btnDialogCopy");
 let txtResult: HTMLTextAreaElement = document.querySelector("#txtResult");
 let comboKeepEscape: HTMLSelectElement = document.querySelector("#comboKeepEscape")
 
-
+checkNotificationAccess();
 
 document.addEventListener("DOMContentLoaded", (e) => {
     let btns: NodeListOf<HTMLButtonElement> = document.querySelectorAll('.mdc-button')
@@ -87,6 +87,7 @@ function dialogEvent(eventTrigger) {
         setTimeout(() => {
             eventTrigger.removeAttribute("copied")
         }, 1500)
+        executeNotification("Copied!", "Text Successfully copied!");
     }
 
     if (eventTrigger.id === "btnSave") {
@@ -104,5 +105,31 @@ function loadSetup() {
     if (settings != null) {
         txtVarName.value = settings.varName;
         txtCharsCount.value = settings.charsCount;
+    }
+}
+
+function checkNotificationAccess(): boolean {
+    if ("Notification" in window) {
+        if (Notification.permission === "granted") {
+            return true;
+        } else {
+            Notification.requestPermission();
+        }
+    }
+    return false;
+}
+
+function executeNotification(title: string, body: string) {
+    if (checkNotificationAccess()) {
+        let options = {
+            body: body
+        }
+
+        let notification = new Notification(title, options)
+        notification.addEventListener("click", () => {
+            console.log("notification clicked")
+        })
+    } else {
+        alert(body);
     }
 }
