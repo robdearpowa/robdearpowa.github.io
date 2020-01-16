@@ -11,21 +11,6 @@ let checkKeepEscape: HTMLInputElement = document.querySelector("#checkKeepEscape
 
 checkNotificationAccess();
 
-document.addEventListener("DOMContentLoaded", (e) => {
-    let btns: NodeListOf<HTMLButtonElement> = document.querySelectorAll('.mdc-button')
-    let textInputs: NodeListOf<HTMLButtonElement> = document.querySelectorAll('.mdc-text-field')
-
-    for (let i = 0; i < btns.length; i++) {
-        //@ts-ignore
-        mdc.ripple.MDCRipple.attachTo(btns[i])
-    }
-
-    for (let i = 0; i < textInputs.length; i++) {
-        //@ts-ignore
-        mdc.textField.MDCTextField.attachTo(textInputs[i])
-    }
-})
-
 checkKeepEscape.checked = true;
 
 btnElaborate.addEventListener("click", (e) => {
