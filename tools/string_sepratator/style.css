@@ -8,15 +8,39 @@ body {
     --theme-shadow: #00000036;
     --theme-light: #ffffff;
     --theme-background: #e6e6e6;
-    --theme-button-anim1: #5bc057;
+    --theme-button-anim1: #5ac0579c;
     --theme-light-anim1: #8aff86;
     --theme-textbox-background: #f3f3f3;
     --theme-scrollbar-thumb: #d3d3d3;
     --theme-scrollbar-thumb-hover: #c4c4c4;
     --theme-scrollbar-thumb-active: #a1a1a1;
     --theme-animation-speed: 150ms;
+    --theme-animation-color-ripple: #ffffff7c;
 
     background-color: var(--theme-background);
+}
+
+@keyframes ripple {
+    0% {
+      transform: scale(0, 0);
+      opacity: 1;
+    }
+    20% {
+      transform: scale(25, 25);
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      transform: scale(40, 40);
+    }
+}
+
+@keyframes press{
+    50% {
+        border: hidden;
+        box-shadow: 2px 2px 3px var(--theme-shadow) inset,
+                -2px -2px 3px var(--theme-light) inset;
+    }
 }
 
 label{
@@ -25,6 +49,8 @@ label{
 }
 
 .button {
+    position: relative;
+    overflow: hidden;
     min-height: 36px;
     padding-left: 18px;
     padding-right: 18px;
@@ -36,19 +62,32 @@ label{
     background-color: var(--button-theme);
     color: var(--button-text);
     margin: 5px;
-    transition: all var(--theme-animation-speed) ease-in-out;
 }
 
-.button:active{
-    border: hidden;
-    box-shadow: 2px 2px 3px var(--theme-shadow) inset,
-                -2px -2px 3px var(--theme-light) inset;
+.button:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: var(--theme-animation-color-ripple);
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(1, 1) translate(-50%);
+    transform-origin: 50% 50%;
 }
 
-.button[copied] {
-    box-shadow: 2px 2px 3px var(--theme-shadow),
-                -2px -2px 3px var(--theme-light-anim1);
-    background-color: var(--theme-button-anim1);
+.button:focus:not(:active)::after{
+    animation: ripple 0.5s ease-out;
+}
+
+.button:focus:not(:active){
+    /*animation: press 0.5s ease-out*/
+}
+
+.button[copied]::after{
+    background: var(--theme-button-anim1)
 }
 
 .textField {

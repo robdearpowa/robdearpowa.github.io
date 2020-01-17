@@ -8,18 +8,7 @@ var btnCopy = document.querySelector("#btnDialogCopy");
 var txtResult = document.querySelector("#txtResult");
 var checkKeepEscape = document.querySelector("#checkKeepEscape");
 checkNotificationAccess();
-document.addEventListener("DOMContentLoaded", function (e) {
-    var btns = document.querySelectorAll('.mdc-button');
-    var textInputs = document.querySelectorAll('.mdc-text-field');
-    for (var i = 0; i < btns.length; i++) {
-        //@ts-ignore
-        mdc.ripple.MDCRipple.attachTo(btns[i]);
-    }
-    for (var i = 0; i < textInputs.length; i++) {
-        //@ts-ignore
-        mdc.textField.MDCTextField.attachTo(textInputs[i]);
-    }
-});
+
 checkKeepEscape.checked = true;
 btnElaborate.addEventListener("click", function (e) {
     elaborateClick(e.target);
@@ -45,7 +34,6 @@ function elaborateClick(eventTrigger) {
     var result = "";
     txtResult.value = "";
     txtResult.value += varName + '="' + result + '";\n';
-    txtResult.focus();
     while (content.length > 0 && charsCount > 0) {
         result = content.substring(0, charsCount);
         content = content.substring(charsCount);
