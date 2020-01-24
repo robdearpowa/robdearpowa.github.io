@@ -14,10 +14,14 @@ body {
     --theme-scrollbar-thumb: #d3d3d3;
     --theme-scrollbar-thumb-hover: #c4c4c4;
     --theme-scrollbar-thumb-active: #a1a1a1;
-    --theme-animation-speed: 150ms;
+    --theme-animation-speed: 250ms;
     --theme-animation-color-ripple: #ffffff7c;
 
     background-color: var(--theme-background);
+    width: 50%;
+    position: relative;
+    margin-left: 50%;
+    transform: translateX(-50%);
 }
 
 @keyframes ripple {
@@ -36,10 +40,20 @@ body {
 }
 
 @keyframes press{
-    50% {
+    0%{
         border: hidden;
-        box-shadow: 2px 2px 3px var(--theme-shadow) inset,
-                -2px -2px 3px var(--theme-light) inset;
+        box-shadow: 2px 2px 3px var(--theme-shadow),
+                -2px -2px 3px var(--theme-light);
+    }
+    70%{
+        border: hidden;
+        box-shadow: -2px -2px 3px var(--theme-shadow),
+                2px 2px 3px var(--theme-light);
+    }
+    100%{
+        border: hidden;
+        box-shadow: 2px 2px 3px var(--theme-shadow),
+                -2px -2px 3px var(--theme-light);
     }
 }
 
@@ -79,14 +93,14 @@ label{
 }
 
 .button:focus:not(:active)::after{
-    animation: ripple 0.5s ease-out;
+    /*animation: ripple 0.5s ease-out;*/
 }
 
 .button:focus:not(:active){
-    /*animation: press 0.5s ease-out*/
+    animation: press var(--theme-animation-speed) ease-out
 }
 
-.button[copied]::after{
+.button[copied]{
     background: var(--theme-button-anim1)
 }
 
@@ -114,7 +128,7 @@ label{
 
 .multiLine{
     height: 200px;
-    width: 80%;
+    width: 400px;
 }
 
 .textField::-webkit-scrollbar {
@@ -142,4 +156,10 @@ label {
     -moz-user-select: none;
     -ms-user-select: none;
     -webkit-user-select: none;
+}
+
+@media only screen and (max-width: 700px){
+    .multiLine{
+        width: 80%
+    }
 }
